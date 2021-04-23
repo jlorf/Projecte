@@ -1,4 +1,5 @@
-var urlParams;
+var urlParams2;
+var prof = 0;
 $(document).ready(function() {
     // let index = 1;
     // for(let property in navigator){
@@ -19,7 +20,8 @@ $(document).ready(function() {
     //     document.getElementById("taula").appendChild(tr);
     //     index++;
     // }
-    urlParams = new URLSearchParams(window.location.search);
+    urlParams2 = new URLSearchParams(window.location.search);
+    prof = (urlParams2.has('alumnes') ? 0 : 1);
     CarregarTaula();
 });
 
@@ -31,7 +33,7 @@ function CheckUncheck(input)
 function CarregarTaula(){
     var API = "Api/persona/json.php";
     $.getJSON( API, {
-      professor: urlParams.has('alumnes') ? 0 : 1
+      professor: prof
     })
       .done(function( data ) {
         $.each( data.records, function( i, item ) {

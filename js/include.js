@@ -30,6 +30,7 @@ function includeHTML() {
       }
       xhttp.open("GET", file, true);
       xhttp.send();
+      ComprovarLogin();
       /* Exit the function: */
       return;
     }
@@ -39,3 +40,14 @@ function includeHTML() {
 $(document).ready(function(){
     includeHTML();
 });
+var jwt;
+function ComprovarLogin(){
+  jwt = globalThis.localStorage.getItem("JWT");
+    if (!jwt || jwt === undefined || jwt === null){
+        $('#tabprofessors').remove();
+        $('#tabalumnes').remove();
+    } else {
+        $('#tablogin').remove();
+        $("#login").hide();
+    }
+}

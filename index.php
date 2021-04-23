@@ -19,6 +19,7 @@
     <script src="js/bootstrap.min.js"></script>
     <script src="js/include.js"></script>
     <script src="js/index.js"></script>
+    <script src="js/navbar.js"></script>
 </body>
 
 </html>
