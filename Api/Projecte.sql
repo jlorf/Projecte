@@ -218,6 +218,31 @@ ALTER TABLE `GrupClasse`
 --
 ALTER TABLE `UnitatFormativa`
   ADD CONSTRAINT `UFModul` FOREIGN KEY (`Modul`) REFERENCES `Modul` (`codi`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+  CREATE TABLE `TokensUsuari` (
+  `Usuari` int NOT NULL,
+  `JWT` text CHARACTER SET ascii COLLATE ascii_bin NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+--
+-- Índexs per a les taules bolcades
+--
+
+--
+-- Índexs per a la taula `TokensUsuari`
+--
+ALTER TABLE `TokensUsuari`
+  ADD PRIMARY KEY (`Usuari`);
+
+--
+-- Restriccions per a les taules bolcades
+--
+
+--
+-- Restriccions per a la taula `TokensUsuari`
+--
+ALTER TABLE `TokensUsuari`
+  ADD CONSTRAINT `fk_tokensusuari` FOREIGN KEY (`Usuari`) REFERENCES `users` (`id`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

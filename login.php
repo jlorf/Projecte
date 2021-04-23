@@ -20,9 +20,9 @@
             </div>
 
             <!-- Login Form -->
-            <form action="logincheck.php" method="POST">
-                <input type="text" id="login" class="fadeIn second" name="login" placeholder="login">
-                <input type="password" id="password" class="fadeIn third" name="login" placeholder="password">
+            <form action="JWT/login.php" method="POST">
+                <input type="mail" id="email" class="fadeIn second" name="email" placeholder="login">
+                <input type="password" id="password" class="fadeIn third" name="email" placeholder="password">
                 <input type="submit" class="fadeIn fourth" value="Login">
             </form>
 

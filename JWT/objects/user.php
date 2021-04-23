@@ -12,6 +12,7 @@ class User{
     public $lastname;
     public $email;
     public $password;
+    public $jwt;
  
     // constructor
     public function __construct($db){
@@ -148,6 +149,32 @@ class User{
         // execute the query
         if($stmt->execute()){
             return true;
+        }
+     
+        return false;
+    }
+
+    public function GuardarJWT(){
+        $query = "INSERT INTO TokensUsuari (Usuari, JWT) VALUES (:id,:jwt);";
+     
+        // prepare the query
+        $stmt = $this->conn->prepare($query);
+     
+        // bind the values from the form
+        $stmt->bindParam(':id', $this->id);
+        $stmt->bindParam(':jwt', $this->jwt);
+     
+        // execute the query
+        if($stmt->execute()){
+            return true;
+        } else {
+            $query = "UPDATE TokensUsuari SET JWT=:jwt WHERE id=:id;";
+            $stmt = $this->conn->prepare($query);
+            // bind the values from the form
+            $stmt->bindParam(':id', $this->id);
+            $stmt->bindParam(':jwt', $this->jwt);
+            if($stmt->execute())
+                return true;
         }
      
         return false;

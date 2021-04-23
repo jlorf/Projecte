@@ -53,6 +53,8 @@ if($email_exists && password_verify($data->password, $user->password)){
  
     // generate jwt
     $jwt = JWT::encode($token, $key);
+    $user->jwt = $jwt;
+    $user->GuardarJWT();
     echo json_encode(
             array(
                 "message" => "Successful login.",
