@@ -48,7 +48,8 @@ function CarregarTaula(){
         var input = document.createElement("input");
         input.type = "checkbox";
         input.className= "custom-control-input";
-        td3.innerHTML = item.professor;
+        input.value = item.professor;
+        td3.appendChild(input);
         tr.appendChild(th);
         tr.appendChild(td1);
         tr.appendChild(td2);
