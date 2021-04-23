@@ -20,10 +20,10 @@
             </div>
 
             <!-- Login Form -->
-            <form action="JWT/login.php" method="POST">
-                <input type="mail" id="email" class="fadeIn second" name="email" placeholder="login">
-                <input type="password" id="password" class="fadeIn third" name="email" placeholder="password">
-                <input type="submit" class="fadeIn fourth" value="Login">
+            <form name="myForm" id="myForm" method="post" onsubmit="return localpost()">
+                <input type="text" id="email" class="fadeIn second" name="email" placeholder="login">
+                <input type="password" id="password" class="fadeIn third" name="password" placeholder="password">
+                <input type="submit" class="fadeIn fourth" value="Login" click="return EnviarForm();" />                
             </form>
 
             <!-- Remind Passowrd -->
@@ -33,6 +33,7 @@
 
         </div>
     </div>
+    <script type="text/javascript" src="js/login.js"></script>
     <script src="js/jquery-3.5.1.min.js"></script>
     <script src="js/bootstrap.min.js"></script>
 </body>
