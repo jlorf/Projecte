@@ -33,7 +33,8 @@ function CheckUncheck(input)
 function CarregarTaula(){
     var API = "Api/persona/json.php";
     $.getJSON( API, {
-      professor: prof
+      professor: prof,
+      jwt: globalThis.localStorage.getItem("JWT")
     })
       .done(function( data ) {
         $.each( data.records, function( i, item ) {
