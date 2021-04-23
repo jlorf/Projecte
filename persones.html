@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+</head>
+
+<body>
+    <div w3-include-html="navbar.html"></div>
+
+    <div style="width: 100%; margin-top: 15px;">
+        <table class="table table-striped table-responsive-lg table-dark table-hover">
+            <thead>
+            <tr>
+                <th scope="col">Codi</th>
+                <th scope="col">Nom</th>
+                <th scope="col">Cognoms</th>
+                <th scope="col"><input type="checkbox" class="custom-control-input" id="tots" onchange="CheckUncheck(this)"></th>
+            </tr>
+            </thead>
+            <tbody id="taula">
+            </tbody>
+        </table>
+    </div>
+
+    <div w3-include-html="footer.html"></div>
+    <script src="js/jquery-3.5.1.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script src="js/include.js"></script>
+    <script src="js/persones.js"></script>
+</body>
+
+</html>
