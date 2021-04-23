@@ -24,7 +24,8 @@ function EnviarForm(){
                 } else if (e.status === 200){
                     debugger;
                     var data = JSON.parse(e.responseText);
-                    var jwt = data.jwt;
+                    globalThis.localStorage.setItem("JWT", data.jwt);
+                    $("#login").hide();
                 }
             }
         });

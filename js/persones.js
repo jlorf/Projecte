@@ -1,3 +1,4 @@
+var urlParams;
 $(document).ready(function() {
     // let index = 1;
     // for(let property in navigator){
@@ -18,6 +19,7 @@ $(document).ready(function() {
     //     document.getElementById("taula").appendChild(tr);
     //     index++;
     // }
+    urlParams = new URLSearchParams(window.location.search);
     CarregarTaula();
 });
 
@@ -29,7 +31,7 @@ function CheckUncheck(input)
 function CarregarTaula(){
     var API = "Api/persona/json.php";
     $.getJSON( API, {
-      professor: 1
+      professor: urlParams.has('alumnes') ? 0 : 1
     })
       .done(function( data ) {
         $.each( data.records, function( i, item ) {
