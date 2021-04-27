@@ -106,7 +106,7 @@ switch ($method) {
 	$data = json_decode(file_get_contents("php://input"));
 	// read products will be here
 	// query products
-	$jwt = (count((array)$data) <= 0 && empty($_GET) ? '' : (empty($_GET) ? '' : $_GET["jwt"]);
+	$jwt = (count((array)$data) <= 0 && empty($_GET) ? '' : (empty($_GET) ? '' : $_GET["jwt"]));
     $prof = empty($_GET) ? 0 : $_GET["professor"];
 	$stmt = empty($data->ids) && (count((array)$data) <= 0 || ($data->professor != 0 && $data->professor != 1)) ? ($prof == 0 || $prof == 1 ? $persona->readPerTipus($prof) : $persona->read()) : (empty($data->ids) ?  $persona->readPerTipus($data->professor) : $persona->readMulti($data->ids));
 
