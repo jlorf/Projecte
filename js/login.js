@@ -17,6 +17,7 @@ function EnviarForm(){
             success: function(data) {
                 globalThis.localStorage.setItem("JWT", data.jwt);
                 $("#login").hide();
+                location.reload(true);
             },
             error: function(e) {
                 if (e.status === 401){
@@ -26,6 +27,7 @@ function EnviarForm(){
                     var data = JSON.parse(e.responseText);
                     globalThis.localStorage.setItem("JWT", data.jwt);
                     $("#login").hide();
+                    location.reload(true);
                 }
             }
         });
