@@ -7,8 +7,44 @@ header("Content-Type: application/json; charset=UTF-8");
 // include database and object files
 include_once '../database.php';
 include_once '../objects/persona.php';
+// required to decode jwt
+include_once '../../JWT/config/core.php';
+include_once '../../JWT/libs/php-jwt-master/src/BeforeValidException.php';
+include_once '../../JWT/libs/php-jwt-master/src/ExpiredException.php';
+include_once '../../JWT/libs/php-jwt-master/src/SignatureInvalidException.php';
+include_once '../../JWT/libs/php-jwt-master/src/JWT.php';
+use \Firebase\JWT\JWT;
 
 $method = $_SERVER['REQUEST_METHOD'];
+
+//$data = json_decode(file_get_contents("php://input"));
+//$set = isset($_GET["jwt"]);
+//$jwt = (count((array)$data) <= 0 && empty($_GET) ? null : (empty($_GET) ? null : ($set ? $_GET["jwt"] : null)));
+
+$data = json_decode(file_get_contents("php://input"));
+$set = isset($_GET["jwt"]);
+$jwt = null;
+if (count((array)$data) <= 0 && empty($_GET)){
+  $jwt = null;
+} else if ($set){
+  $jwt = $_GET["jwt"];
+} else {
+  if ($data == null){
+    $jwt = null;
+  } else $jwt = $data->jwt;
+}
+
+try {
+    // decode jwt
+    $decoded = JWT::decode($jwt, $key, array('HS256'));
+}
+catch (Exception $e){
+  $jwt = null;
+}
+
+if (!isset($jwt)){
+  http_response_code(401);
+} else {
 
 switch ($method) {
     case 'POST':
@@ -18,7 +54,6 @@ switch ($method) {
 	$persona = new Persona($db);
 
 	// get posted data
-	$data = json_decode(file_get_contents("php://input"));
 	if (!empty($data->records)){
 		foreach($data->records as $record => $val) {
 			if(
@@ -102,16 +137,11 @@ switch ($method) {
 
 	// initialize object
 	$persona = new Persona($db);
-
-	$data = json_decode(file_get_contents("php://input"));
 	// read products will be here
 	// query products
-  $set = isset($_GET["jwt"]);
-	$jwt = (count((array)$data) <= 0 && empty($_GET) ? null : (empty($_GET) ? null : ($set ? $_GET["jwt"] : null)));
 
-  if (!isset($jwt)){
-    http_response_code(401);
-  } else {
+
+
       $prof = empty($_GET) ? 0 : $_GET["professor"];
     	$stmt = empty($data->ids) && (count((array)$data) <= 0 || ($data->professor != 0 && $data->professor != 1)) ? ($prof == 0 || $prof == 1 ? $persona->readPerTipus($prof) : $persona->read()) : (empty($data->ids) ?  $persona->readPerTipus($data->professor) : $persona->readMulti($data->ids));
 
@@ -149,8 +179,8 @@ switch ($method) {
     	    // show products data in json format
     	    echo json_encode($persona_arr);
     	}
-    }
 
 	// no products found will be here
        break;
+}
 }
