@@ -1,6 +1,6 @@
 <?php
 // required headers
-header("Access-Control-Allow-Origin: http://localhost:8080");
+header("Access-Control-Allow-Origin: *");
 header("Content-Type: application/json; charset=UTF-8");
 header("Access-Control-Allow-Methods: POST");
 header("Access-Control-Max-Age: 3600");
@@ -14,11 +14,19 @@ include_once 'libs/php-jwt-master/src/SignatureInvalidException.php';
 include_once 'libs/php-jwt-master/src/JWT.php';
 use \Firebase\JWT\JWT;
 
-/// get posted data
 $data = json_decode(file_get_contents("php://input"));
-
-// get jwt
-$jwt=isset($data->jwt) ? $data->jwt : "";
+$set = isset($_POST["jwt"]);
+$setget = isset($_GET["jwt"]);
+$jwt = null;
+if (count((array)$data) <= 0 && empty($_POST) && empty($_GET)){
+  $jwt = null;
+} else if ($set){
+  $jwt = $_POST["jwt"];
+} else if ($setget){
+  $jwt = $_GET["jwt"];
+} else {
+  $jwt = $data->jwt;
+}
 
 // if jwt is not empty
 if($jwt){
