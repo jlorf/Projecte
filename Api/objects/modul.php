@@ -1,6 +1,6 @@
 <?php
 class Modul{
-  
+
 	// database connection and table name
 	public $conn;
 	public $codi;
@@ -17,10 +17,10 @@ class Modul{
 	    $query = "SELECT * FROM `Modul`";
 	    // prepare query statement
 	    $stmt = $this->conn->prepare($query);
-	  
+
 	    // execute query
 	    $stmt->execute();
-	  
+
 	    return $stmt;
 	}
 
@@ -43,21 +43,21 @@ class Modul{
 
 	// create product
 	function create(){
-	  
+
 	    // query to insert record
 	    $query = "INSERT INTO `Modul` SET Nom=:Nom, Abrev=:Abrev";
-	  
+
 	    // prepare query
 	    $stmt = $this->conn->prepare($query);
-	  
+
 	    // sanitize
 	    $this->Nom=htmlspecialchars(strip_tags($this->Nom));
 	    $this->Abrev=htmlspecialchars(strip_tags($this->Abrev));
-	  
+
 	    // bind values
 	    $stmt->bindParam(":Nom", $this->Nom);
 	    $stmt->bindParam(":Abrev", $this->Abrev);
-	  
+
 	    // execute query
 	    if($stmt->execute()){
 		// query to insert record
@@ -69,40 +69,40 @@ class Modul{
 		$this->codi = $result['codi'];
 		return true;
 	    } else {
-		print_r($stmt->errorInfo());
+		//print_r($stmt->errorInfo());
             }
-	  
+
 	    return false;
-	      
+
 	}
 	// update product
 	function update(){
-	  
+
 	    // query to insert record
 	    $query = "UPDATE `Modul` SET Nom=:Nom, Abrev=:Abrev WHERE codi=:codi";
-	  
+
 	    // prepare query
 	    $stmt = $this->conn->prepare($query);
-	  
+
 	    // sanitize
 	    $this->codi=htmlspecialchars(strip_tags($this->codi));
 	    $this->Nom=htmlspecialchars(strip_tags($this->Nom));
 	    $this->Abrev=htmlspecialchars(strip_tags($this->Abrev));
-	  
+
 	    // bind values
 	    $stmt->bindParam(":codi", $this->codi);
 	    $stmt->bindParam(":Nom", $this->Nom);
 	    $stmt->bindParam(":Abrev", $this->Abrev);
-	  
+
 	    // execute query
 	    if($stmt->execute()){
 		return true;
 	    } else {
 		print_r($stmt->errorInfo());
             }
-	  
+
 	    return false;
-	      
+
 	}
 }
 ?>

@@ -19,11 +19,14 @@ $method = $_SERVER['REQUEST_METHOD'];
 
 $data = json_decode(file_get_contents("php://input"));
 $set = isset($_GET["jwt"]);
+$setpost = isset($_POST["jwt"]);
 $jwt = null;
-if (count((array)$data) <= 0 && empty($_GET)){
+if (count((array)$data) <= 0 && !$set && !$setpost){
   $jwt = null;
 } else if ($set){
   $jwt = $_GET["jwt"];
+} else if ($setpost){
+  $jwt = $_POST["jwt"];
 } else {
   $jwt = $data->jwt;
 }
@@ -101,24 +104,34 @@ switch ($method) {
 	// get posted data
 	//$data = json_decode(file_get_contents("php://input"));
 
-	// make sure data is not empty
-	if(
-	    !empty($data->Nom) &&
-	    !empty($data->Abrev)
-	){
+  $set = isset($_POST["Nom"]);
+  $setget = isset($_GET["Nom"]);
 
-	    // set modul property values
-	    $modul->Nom = $data->Nom;
-	    $modul->Abrev = $data->Abrev;
+  if (!$data && $setget){
+    $modul->Nom = $_GET["Nom"];
+    $modul->Abrev = $_GET["Abrev"];
+  } elseif (!$data && $set) {
+    $modul->Nom = $_POST["Nom"];
+    $modul->Abrev = $_POST["Abrev"];
+  } else {
+    // set product property values
+    $modul->Nom = $data->Nom;
+    $modul->Abrev = $data->Abrev;
+  }
+
+	if(
+	    !empty($modul->Nom) &&
+	    !empty($modul->Abrev)
+	){
 
 	    // create the modul
 	    if($modul->create()){
 
 		// set response code - 201 created
-		http_response_code(201);
+		    http_response_code(201);
 
 		// tell the user
-		echo json_encode($modul);
+		    echo json_encode($modul);
 	    }
 
 	    // if unable to create the product, tell the user
@@ -128,7 +141,7 @@ switch ($method) {
 		http_response_code(503);
 
 		// tell the user
-		echo json_encode(array("message" => "Unable to create modul."));
+		  echo json_encode(array("message" => "Unable to create modul."));
 	    }
 	}
 
