@@ -110,8 +110,8 @@ class Persona{
 	  
 	    // bind values
 	    $stmt->bindParam(":codi", $this->codi);
-	    $stmt->bindParam(":UF", $this->UF);
-	    $stmt->bindParam(":DataHora", $this->DataHora);
+	    $stmt->bindParam(":Nom", $this->Nom);
+	    $stmt->bindParam(":Cognoms", $this->Cognoms);
 	    $stmt->bindParam(":professor", $this->professor);
 	  
 	    // execute query

@@ -1,6 +1,7 @@
 <?php
 // required headers
 header("Access-Control-Allow-Origin: *");
+header('Access-Control-Allow-Methods: POST, GET, OPTIONS, PUT, DELETE');
 header("Content-Type: application/json; charset=UTF-8");
 
 // database connection will be here
@@ -52,24 +53,33 @@ if (!isset($jwt)) {
 
 			$persona = new Persona($db);
 
-			// get posted data
-			$data = json_decode(file_get_contents("php://input"));
+			$set = isset($_POST["Nom"]);
+			$setget = isset($_GET["Nom"]);
 
-			// make sure data is not empty
-			if (
-				!empty($data->codi) &&
-				!empty($data->Nom) &&
-				!empty($data->Cognoms)
-			) {
-				if (empty($data->professor)) {
-					$data->professor = 0;
-				}
-
-				// set persona property values
+			if (!$data && $setget) {
+				$persona->codi = $_GET["codi"];
+				$persona->Nom = $_GET["Nom"];
+				$persona->Cognoms = $_GET["Cognoms"];
+			} elseif (!$data && $set) {
+				$persona->codi = $_POST["codi"];
+				$persona->Nom = $_POST["Nom"];
+				$persona->Cognoms = $_POST["Cognoms"];
+			} else {
+				// set product property values
 				$persona->codi = $data->codi;
 				$persona->Nom = $data->Nom;
 				$persona->Cognoms = $data->Cognoms;
-				$persona->professor = $data->professor;
+			}
+			
+			// make sure data is not empty
+			if (
+				!empty($persona->codi) &&
+				!empty($persona->Nom) &&
+				!empty($persona->Cognoms)
+			) {
+				if (empty($persona->professor)) {
+					$persona->professor = 0;
+				}
 
 				// create the persona
 				if ($persona->update()) {
@@ -108,22 +118,28 @@ if (!isset($jwt)) {
 
 			$persona = new Persona($db);
 
-			// get posted data
-			$data = json_decode(file_get_contents("php://input"));
+			$set = isset($_POST["Nom"]);
+			$setget = isset($_GET["Nom"]);
 
-			// make sure data is not empty
-			if (
-				!empty($data->Nom) &&
-				!empty($data->Cognoms)
-			) {
-				if (empty($data->professor)) {
-					$data->professor = 0;
-				}
-
-				// set persona property values
+			if (!$data && $setget) {
+				$persona->Nom = $_GET["Nom"];
+				$persona->Cognoms = $_GET["Cognoms"];
+			} elseif (!$data && $set) {
+				$persona->Nom = $_POST["Nom"];
+				$persona->Cognoms = $_POST["Cognoms"];
+			} else {
+				// set product property values
 				$persona->Nom = $data->Nom;
 				$persona->Cognoms = $data->Cognoms;
-				$persona->professor = $data->professor;
+			}
+			// make sure data is not empty
+			if (
+				!empty($persona->Nom) &&
+				!empty($persona->Cognoms)
+			) {
+				if (empty($persona->professor)) {
+					$persona->professor = 0;
+				}
 
 				// create the persona
 				if ($persona->create()) {

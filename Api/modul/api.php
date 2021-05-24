@@ -1,6 +1,7 @@
 <?php
 // required headers
 header("Access-Control-Allow-Origin: *");
+header('Access-Control-Allow-Methods: POST, GET, OPTIONS, PUT, DELETE');
 header("Content-Type: application/json; charset=UTF-8");
 
 // database connection will be here
