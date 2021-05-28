@@ -62,7 +62,7 @@ class Persona{
 	function create(){
 	  
 	    // query to insert record
-	    $query = "INSERT INTO `Persona` SET Nom=:Nom, Cognoms=:Cognoms, professor=:professor";
+	    $query = "INSERT INTO `Persona` SET Nom=:Nom, Cognoms=:Cognoms, professor=:professor, Usuari=:user";
 	  
 	    // prepare query
 	    $stmt = $this->conn->prepare($query);
@@ -76,6 +76,7 @@ class Persona{
 	    $stmt->bindParam(":Nom", $this->Nom);
 	    $stmt->bindParam(":Cognoms", $this->Cognoms);
 	    $stmt->bindParam(":professor", $this->professor);
+		$stmt->bindParam(":user", $this->user);
 	  
 	    // execute query
 	    if($stmt->execute()){

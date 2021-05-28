@@ -58,6 +58,12 @@ class User{
      
         // execute the query, also check if query was successful
         if($stmt->execute()){
+            $query2 = "SELECT LAST_INSERT_ID() as codi";
+		// prepare query
+		$stmt2 = $this->conn->prepare($query2);
+		$stmt2->execute();
+		$result = $stmt2->fetch();
+		$this->id = $result['codi'];
             return true;
         }
      
