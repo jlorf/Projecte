@@ -9,6 +9,7 @@ header("Access-Control-Allow-Headers: Content-Type, Access-Control-Allow-Headers
 // files needed to connect to database
 include_once '../Api/database.php';
 include_once 'objects/user.php';
+include_once '../Api/objects/persona.php';
 // get database connection
 $database = new Database();
 $db = $database->getConnection();
@@ -41,6 +42,14 @@ if (!$data && $setget){
 
 // create the user
 if($user->create()){
+
+  $prof = new Persona($db);
+  $prof->Nom = $user->firstname;
+  $prof->Cognoms = $user->lastname;
+  $prof->professor = 1;
+  $prof->user = $user->id;
+
+  $prof->create();
 
     // set response code
     http_response_code(200);

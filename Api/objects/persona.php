@@ -7,6 +7,7 @@ class Persona{
 	public $Nom;
 	public $Cognoms;
 	public $professor;
+	public $user;
 
 	// constructor with $db as database connection
 	public function __construct($db){

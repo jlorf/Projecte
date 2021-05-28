@@ -28,7 +28,7 @@ class GrupClasse{
 	// select all query
 	    $integerIDs = array_map('intval', $ids);
 	    $inQuery = implode(',', array_fill(0, count($integerIDs), '?'));
-	    $query = "SELECT * FROM `GrupClasse` WHERE codi IN(" . $inQuery . ")";
+	    $query = "SELECT * FROM `GrupClasse` WHERE UF IN(" . $inQuery . ")";
 	    // prepare query statement
 	    $stmt = $this->conn->prepare($query);
 	    foreach($integerIDs as $k => $id)
@@ -40,6 +40,24 @@ class GrupClasse{
   		print_r($stmt->errorInfo());
 	    return $stmt;
 	}
+
+	function deleteMulti($uf, $ids, $prof){
+		$integerIDs = array_map('intval', $ids);
+	    $inQuery = implode(',', array_fill(0, count($integerIDs), '?'));
+			$query = "DELETE FROM `GrupClasse` WHERE UF = :UF AND professor = :prof AND Persona NOT IN(" . $inQuery . ")";
+			// prepare query statement
+			$stmt = $this->conn->prepare($query);
+			foreach($integerIDs as $k => $id)
+				{
+				$stmt->bindValue(($k+1), $id, PDO::PARAM_INT);
+				}
+			// execute query
+			$stmt->bindParam(":UF", $uf);
+	    	$stmt->bindParam(":prof", $prof);
+			if(!$stmt->execute())
+			  //print_r($stmt->errorInfo());
+			return $stmt;
+		}
 
 	// create product
 	function create(){
@@ -64,7 +82,7 @@ class GrupClasse{
 	    if($stmt->execute()){
 		return true;
 	    } else {
-		print_r($stmt->errorInfo());
+		//print_r($stmt->errorInfo());
             }
 	  
 	    return false;
@@ -93,11 +111,10 @@ class GrupClasse{
 	    if($stmt->execute()){
 		return true;
 	    } else {
-		print_r($stmt->errorInfo());
+		//print_r($stmt->errorInfo());
             }
 	  
 	    return false;
 	      
 	}
 }
-?>
