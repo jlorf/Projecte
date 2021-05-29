@@ -48,13 +48,13 @@ class GrupClasse
 	{
 		$integerIDs = array_map('intval', $ids);
 		$inQuery = implode(',', array_fill(0, count($integerIDs), '?'));
-		$query = "DELETE FROM `GrupClasse` WHERE UF = :UF AND professor = :prof AND Persona NOT IN(" . $inQuery . ")";
+		$query = "DELETE FROM `GrupClasse` WHERE UF = ? AND professor = ? AND Persona NOT IN(" . $inQuery . ")";
 		// prepare query statement
 		$stmt = $this->conn->prepare($query);
-		$stmt->bindParam(":UF", $uf);
-		$stmt->bindParam(":prof", $prof);
+		$stmt->bindValue((1), $uf, PDO::PARAM_INT);
+		$stmt->bindValue((2), $prof, PDO::PARAM_INT);
 		foreach ($integerIDs as $k => $id) {
-			$stmt->bindValue(($k + 1), $id, PDO::PARAM_INT);
+			$stmt->bindValue(($k + 1 + 2), $id, PDO::PARAM_INT);
 		}
 		// execute query
 		if (!$stmt->execute())

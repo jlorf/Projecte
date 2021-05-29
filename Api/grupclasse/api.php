@@ -149,6 +149,7 @@ if (!isset($jwt)) {
 				{
 					$grupclasse->deleteMulti($uf, $persones, $professor);
 				}
+				echo json_encode($response);
 				http_response_code($response);
 			}
 

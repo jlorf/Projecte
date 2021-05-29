@@ -59,6 +59,7 @@ if($email_exists && password_verify($pass, $user->password)){
     $user->GuardarJWT();
     echo json_encode(
             array(
+                "user" => $user->firstname . " " . $user->lastname,
                 "message" => "Successful login.",
                 "jwt" => $jwt
             )
