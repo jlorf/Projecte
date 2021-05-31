@@ -25,6 +25,21 @@ class Assistencia{
 	    return $stmt;
 	}
 
+	function readMulti()
+	{
+		$query = "SELECT * FROM `Assistencia` WHERE UF = :UF AND DataHora = :DataHora";
+		// prepare query statement
+		$stmt = $this->conn->prepare($query);
+		
+	    $stmt->bindParam(":UF", $this->UF);
+	    $stmt->bindParam(":DataHora", $this->DataHora);
+
+		// execute query
+		if (!$stmt->execute())
+			print_r($stmt->errorInfo());
+		return $stmt;
+	}
+
 	// create product
 	function create(){
 	  
@@ -50,7 +65,7 @@ class Assistencia{
 	    if($stmt->execute()){
 		return true;
 	    } else {
-		print_r($stmt->errorInfo());
+		//print_r($stmt->errorInfo());
             }
 	  
 	    return false;
@@ -81,7 +96,7 @@ class Assistencia{
 	    if($stmt->execute()){
 		return true;
 	    } else {
-		print_r($stmt->errorInfo());
+		//print_r($stmt->errorInfo());
             }
 	  
 	    return false;
